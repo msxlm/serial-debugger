@@ -30,7 +30,7 @@ namespace SerialDebugger
             {
                 if (!IsHexDigit(token[i]))
                 {
-                    throw new FormatException($"Invalid hex character: '{token[i]}'");
+                    throw new FormatException($"无效的十六进制字符：“{token[i]}”");
                 }
             }
 

@@ -14,6 +14,7 @@ namespace SerialDebugger
         public static readonly string[] DataBitsTexts = { "5", "6", "7", "8" };
 
         public static readonly string[] ParityTexts = { "None", "Even", "Odd", "Mark" };
+        public static readonly string[] ParityDisplayTexts = { "无校验", "偶校验", "奇校验", "标记校验" };
         public static readonly Parity[] ParityValues = { Parity.None, Parity.Even, Parity.Odd, Parity.Mark };
 
         public static readonly string[] StopBitsTexts = { "1", "1.5", "2" };
@@ -33,6 +34,11 @@ namespace SerialDebugger
         [JsonPropertyName("textEncoding")] public string TextEncodingConf { get; set; } = "UTF-8";
         [JsonPropertyName("newLine")] public string NewLineConf { get; set; } = "LF";
         [JsonPropertyName("autoBreak")] public int AutoBreakConf { get; set; } = 1000;
+        [JsonPropertyName("forwardPortName")] public string ForwardPortNameConf { get; set; } = "";
+        [JsonPropertyName("forwardBaudRate")] public string ForwardBaudRateConf { get; set; } = "115200";
+        [JsonPropertyName("forwardDataBits")] public string ForwardDataBitsConf { get; set; } = "8";
+        [JsonPropertyName("forwardParity")] public string ForwardParityConf { get; set; } = "None";
+        [JsonPropertyName("forwardStopBits")] public string ForwardStopBitsConf { get; set; } = "1";
 
         private static readonly JsonTypeInfo<AppSettings> JsonTypeInfo =
             AppSettingsJsonContext.Default.AppSettings;
@@ -112,6 +118,22 @@ namespace SerialDebugger
             if (AutoBreakConf < 0 || AutoBreakConf > 10_000)
             {
                 AutoBreakConf = defaults.AutoBreakConf; changed = true;
+            }
+            if (Array.IndexOf(BaudRateValues, ParseIntOrZero(ForwardBaudRateConf)) < 0)
+            {
+                ForwardBaudRateConf = defaults.ForwardBaudRateConf; changed = true;
+            }
+            if (Array.IndexOf(DataBitsTexts, ForwardDataBitsConf) < 0)
+            {
+                ForwardDataBitsConf = defaults.ForwardDataBitsConf; changed = true;
+            }
+            if (Array.IndexOf(ParityTexts, ForwardParityConf) < 0)
+            {
+                ForwardParityConf = defaults.ForwardParityConf; changed = true;
+            }
+            if (Array.IndexOf(StopBitsTexts, ForwardStopBitsConf) < 0)
+            {
+                ForwardStopBitsConf = defaults.ForwardStopBitsConf; changed = true;
             }
             return changed;
         }

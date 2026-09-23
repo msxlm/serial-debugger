@@ -14,6 +14,8 @@ A lightweight Windows application for debugging serial port communication. Send 
 - Non-blocking send/receive on background threads with thread-safe UI updates
 - Live `SentCount` / `ReceivedCount` status
 - Settings auto-persist to `%AppData%\SerialDebugger\settings.json` and reload on next launch
+- Bidirectional serial forwarding between two different COM ports, with independent baud rate, data bits, parity, and stop bits for each port. Forwarded bytes are passed through unchanged; the log shows the direction and byte counts.
+- Successful forwarded traffic is appended to `%AppData%\SerialDebugger\forwarding.log`. Each UTF-8 line contains the time, source and destination ports, byte count, and lossless hexadecimal payload. Binary data is never decoded as text in this file.
 - Hot-unplug detection — closes the port and notifies you if the device is removed while open
 
 ## Requirements

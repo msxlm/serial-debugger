@@ -95,6 +95,14 @@ NOTE the input text or hex string will not be cleared after sending, user can mo
 
 When serial port receive data from background thread, it will update the ReceivedCount in the global status.
 
+### Serial forwarding
+
+The forwarding section selects a second, different serial port with its own baud rate, data bits, parity, and stop bits. Clicking "Start Forwarding" opens the primary port if needed, then opens the second port. Bytes received on either port are written unchanged to the other port. Text encoding and newline settings only affect manual sends and display, not forwarding. Clicking "Stop Forwarding" closes the second port; closing the primary port or the app also stops forwarding. The two port settings are saved, but forwarding does not start automatically on launch.
+
+The receive log identifies the source and destination of forwarded data. The status shows total bytes sent and received across both ports and the byte count in each forwarding direction. A forwarding write or second-port error stops forwarding and reports the error.
+
+Every successful forwarding operation is appended to `%AppData%\SerialDebugger\forwarding.log` as a UTF-8 line with an ISO 8601 timestamp, source and destination port, byte count, and hexadecimal payload. The file uses hex rather than decoded text so binary data and data split between serial read events remain lossless and readable. A log write error stops forwarding and reports the error.
+
 ### Display Sent and Received Data
 
 `textBoxDisplayText` and `textBoxDisplayHex` are used to display sent and received data in text and hex format. 
